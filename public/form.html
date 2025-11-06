@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Iscriviti all'Evento</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <h1 class="title">Iscriviti all'Evento</h1>
+    <form id="form">
+      <input name="nome" type="text" placeholder="Nome" required />
+      <input name="cognome" type="text" placeholder="Cognome" required />
+      <input name="email" type="email" placeholder="Email" required />
+      <button type="submit" class="btn">Invia Iscrizione</button>
+    </form>
+    <p id="message"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(form));
+      const res = await fetch('/iscrizione', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const msg = await res.text();
+      document.getElementById('message').textContent = msg;
+    });
+  </script>
+</body>
+</html>
